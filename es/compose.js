@@ -6,7 +6,7 @@ exports.compose = function () {
     for (var _i = 0; _i < arguments.length; _i++) {
         fns[_i] = arguments[_i];
     }
-    return fns.reduce(function (f, g) { return function () {
+    return fns.reduceRight(function (f, g) { return function () {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
