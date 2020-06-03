@@ -1,41 +1,50 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Functor = void 0;
-var assert_1 = require("assert");
 var identity_1 = require("../identity");
-var Functor = /** @class */ (function () {
-    function Functor(value) {
-        var _this = this;
-        this.value = value;
-        this.map = function (fn) {
-            _this.value = fn(_this.value);
-        };
-    }
-    Functor.of = function (v) {
-        return new Functor(v);
-    };
-    return Functor;
-}());
-exports.Functor = Functor;
-// 同一律
+var assert_1 = require("assert");
+var compose_1 = require("../compose");
+var F = function (x) { return x instanceof Function ? x : "" + x; };
+/*
+ * 同一律
+ */
 ;
 (function () {
-    var v1 = Functor.of(1);
-    var v2 = Functor.of(1);
-    var f = function (v) { return v + 1; };
-    v1.map(f);
-    v2.map(identity_1.identity(f));
-    assert_1.deepEqual(identity_1.identity(v1).value, v2.value);
+    assert_1.equal(identity_1.identity(F(1)), F(identity_1.identity(1)));
 })();
-// 交换律
+/*
+ * 交换律
+ */
 ;
 (function () {
-    var v1 = Functor.of(1);
-    var v2 = Functor.of(1);
-    var f = function (v) { return v + 1; };
-    var g = function (v) { return v * 10; };
-    v1.map(g);
-    v1.map(f);
-    v2.map(function (x) { return f(g(x)); });
-    assert_1.deepEqual(v1.value, v2.value);
+    var f = function (x) { return x + 1; };
+    var g = function (x) { return x * 10; };
+    assert_1.equal(F(compose_1.compose(f, g))(1), compose_1.compose(F(f), F(g))(1));
+})();
+var Box = /** @class */ (function () {
+    function Box(value) {
+        this.value = value;
+    }
+    Box.of = function (v) {
+        return new Box(v);
+    };
+    Box.prototype.map = function (fn) {
+        return Box.of(fn(this.value));
+    };
+    return Box;
+}());
+/*
+ * 同一律
+ */
+;
+(function () {
+    assert_1.equal(identity_1.identity(Box.of(1)).value, Box.of(identity_1.identity(1)).value);
+})();
+/*
+ * 交换律
+ */
+;
+(function () {
+    var f = function (x) { return x + 1; };
+    var g = function (x) { return x * 10; };
+    assert_1.equal(Box.of(1).map(f).map(g).value, Box.of(1).map(compose_1.compose(f, g)).value);
 })();
