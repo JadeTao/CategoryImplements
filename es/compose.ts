@@ -1,2 +1,3 @@
-type fn = (...args: any[]) => any
-export const compose = (...fns: fn[]) => fns.reduceRight((f, g) => (...args: any[]) => f(g(...args)))
+type fn<T> = (...args: Array<T>) => T
+
+export const compose = <T>(...fns: Array<fn<T>>) => fns.reduceRight((f, g) => (...args: T[]) => f(g(...args)))
