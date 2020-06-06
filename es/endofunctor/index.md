@@ -7,12 +7,17 @@
 
 ### 非`chainable`的`mappable`是自函子吗？
 
-`mappable` 不是函子，不是自函子  
+妥协地说  
 
-`mappable`上的`map`  是函子，不是自函子
+`mappable` 是函子，不是自函子  
 
 ### `chainable`是自函子吗？
 
-`chainable` 不是函子，不是自函子  
+妥协地说  
 
-`chainable`上的`map`  是函子，也是自函子，因为它返回另一个`chainable`！
+`chainable` 是函子，是自函子  
+
+### 还有什么自函子？
+
+`const f = x => x`: 是的，我就是。我还是`identity`  
+`const f = (x: number) => x + 1`: 是的，我也是。我还是`number`范畴里的一个映射。

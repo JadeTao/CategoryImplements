@@ -49,8 +49,8 @@ F(compose(f, g)) === compose(F(f), F(g))
 
 ## Q&A
 
-### `functor`是`mappable` `chainable`吗？
-不是。  
+### `mappable` `chainable`是`functor`吗？
+是也不是。  
 `mappable`、`chainable`是对象、容器、数据结构。`functor`是`mapping`，是从一个范畴到另一个范畴的态射，是函数。  
    `mappable`和`chainable`的接口：
 
@@ -67,13 +67,7 @@ interface chainable<T> {
 ```
 
 一些教程喜欢把`functor`比喻为`mappable`  
-`mappable`按照字面意思来说即可`map`的、实现`map`方法的一种封装的数据结构，在这称这种数据结构为`F`  
-`mappable`并未对`map`方法的返回值进行限制，返回值有三种情况：  
-
-- 无返回值。此时的调用方式：`F.map(x => x + 1); F.map(x => x + 1)`。这样`map`实现了从`F`范畴到空范畴的转换，空范畴没有实际意义。
-- 更新后内部值`value`并返回。此时调用方式跟上面相同，实现了从`F`范畴到`T`范畴的转换。这种情况既没有调用上的优化，又没有封装的意义。
-- 返回`mappable`。此时的调用方式：`F.map(x => x + 1).map(x => x + 1)`，通过返回`this`或另一个`mappable`示例实现了链式调用，这种情况也叫做`chainable`。实现了从`F`范畴到`F`范畴的转换。这种情况才是比较实用且常见的封装。  
-
+`mappable`按照字面意思来说是可`map`的、实现`map`方法的一种封装的数据结构，
 一些函数式编程语言或者工具习惯把实现`chainable`接口的`F`叫做`functor`，实际上这种`map(f).map(g)`链式调用只是语法层面的优化。  
 把`F`称为`functor`存在概念上的误差和偏移 - `F`只是对`functor`的应用，它不是`functor`,真正的`functor`是`F`上的`map`方法。如上所述，是`map`在转换范畴。  
 
