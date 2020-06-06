@@ -34,7 +34,7 @@ compose(f, g) = (x) => g(f(x));
 identity(F(x)) === F(identity(x))
 ```
 
-### 交换律
+### 结合律
 
 `F` - `functor`
 `f` `g` - 函数（态射）

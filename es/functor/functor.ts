@@ -6,8 +6,8 @@ import { compose } from "../compose";
  * F is a functor!
  */
 interface functor {
-  (x: (v: number) => number): (v: number) => number;
-  (x: number): number;
+  (x: (v: number) => number): (v: string) => string;
+  (x: number): string;
 }
 
 const F: functor = (x: any): any => x instanceof Function ? x : `${x}`;
@@ -20,14 +20,14 @@ const F: functor = (x: any): any => x instanceof Function ? x : `${x}`;
 })();
 
 /*
- * 交换律
+ * 结合律
  */
 ; (() => {
   const f = (x: number) => x + 1;
   const g = (x: number) => x * 10;
   equal(
-    F(compose(f, g))(1),
-    compose(F(f), F(g))(1)
+    F(compose<number>(f, g))('1'),
+    compose(F(f), F(g))('1')
   )
 })();
 
@@ -51,7 +51,7 @@ class Box<T> {
 })();
 
 /*
- * 交换律
+ * 结合律
  */
 ; (() => {
   const f = (x: number) => x + 1;

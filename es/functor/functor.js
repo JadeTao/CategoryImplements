@@ -12,13 +12,13 @@ var F = function (x) { return x instanceof Function ? x : "" + x; };
     assert_1.equal(identity_1.identity(F(1)), F(identity_1.identity(1)));
 })();
 /*
- * 交换律
+ * 结合律
  */
 ;
 (function () {
     var f = function (x) { return x + 1; };
     var g = function (x) { return x * 10; };
-    assert_1.equal(F(compose_1.compose(f, g))(1), compose_1.compose(F(f), F(g))(1));
+    assert_1.equal(F(compose_1.compose(f, g))('1'), compose_1.compose(F(f), F(g))('1'));
 })();
 var Box = /** @class */ (function () {
     function Box(value) {
@@ -40,7 +40,7 @@ var Box = /** @class */ (function () {
     assert_1.equal(identity_1.identity(Box.of(1)).value, Box.of(identity_1.identity(1)).value);
 })();
 /*
- * 交换律
+ * 结合律
  */
 ;
 (function () {
